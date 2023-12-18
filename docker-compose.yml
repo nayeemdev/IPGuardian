@@ -4,7 +4,7 @@ services:
   nginx:
     image: nginx:stable-alpine
     ports:
-      - 8000:80
+      - "8000:80"
     volumes:
       - ./api:/var/www/api
       - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
@@ -22,7 +22,7 @@ services:
       MYSQL_PASSWORD: root
       MYSQL_ROOT_PASSWORD: root
     ports:
-      - 8889:3306
+      - "8889:3306"
     networks:
       - db
   
@@ -44,7 +44,7 @@ services:
       context: ./client
       dockerfile: Dockerfile
     ports:
-      - 3000:3000
+      - "3000:3000"
     volumes:
       - ./client:/var/www/client
       - /var/www/client/node_modules
