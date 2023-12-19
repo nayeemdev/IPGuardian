@@ -1,10 +1,12 @@
-import Dropdown from 'components/common/Dropdown'
-import ResponsiveNavLink, {ResponsiveNavButton} from 'components/common/ResponsiveNavLink'
-import {DropdownButton} from 'components/common/DropdownLink'
+import Dropdown from 'components/Common/Dropdown'
+import ResponsiveNavLink, {ResponsiveNavButton} from 'components/Common/ResponsiveNavLink'
+import {DropdownButton} from 'components/Common/DropdownLink'
+import {useAuth} from 'hooks/auth'
 import {useState} from 'react'
-import CustomNavLink from 'components/common/NavLink';
+import CustomNavLink from 'components/Common/NavLink';
 
 const Navigation = ({user}) => {
+    const {logout} = useAuth()
     const [open, setOpen] = useState(false)
 
     return (
@@ -19,12 +21,6 @@ const Navigation = ({user}) => {
                                 to="/dashboard"
                             >
                                 Dashboard
-                            </CustomNavLink>
-                            
-                            <CustomNavLink
-                                to="/address-books"
-                            >
-                                Address Books
                             </CustomNavLink>
                         </div>
                     </div>
@@ -54,7 +50,7 @@ const Navigation = ({user}) => {
                                 </button>
                             }>
                             {/* Authentication */}
-                            <DropdownButton>
+                            <DropdownButton onClick={logout}>
                                 Logout
                             </DropdownButton>
                         </Dropdown>
@@ -102,11 +98,6 @@ const Navigation = ({user}) => {
                             to="/dashboard"
                         >
                             Dashboard
-                        </ResponsiveNavLink>
-                        <ResponsiveNavLink
-                            to="/address-books"
-                        >
-                            Address Books
                         </ResponsiveNavLink>
                     </div>
                     {/* Responsive Settings Options */}

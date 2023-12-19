@@ -1,11 +1,11 @@
-import GuestLayout from "components/Layouts/GuestLayout";
+import { useAuth } from 'hooks/auth'
 
-const Home = () => {
-  return (
-    <GuestLayout>
-      <h1>Home</h1>
-    </GuestLayout>
-  );
-};
+function Home() {
+  // Redirect to /login if user is not logged in or redirect to /dashboard if user is logged in
+  useAuth({ middleware: 'auth', redirect: '/login' })
+  useAuth({ middleware: 'guest', redirect: '/dashboard' })
+
+  return null
+}
 
 export default Home;
