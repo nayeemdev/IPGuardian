@@ -8,7 +8,7 @@ fresh:
 	docker-compose down && docker-compose up -d --build
 ps:
 	docker-compose ps
-api:
+api-sh:
 	docker-compose exec api sh
-client:
+client-sh:
 	docker-compose exec client sh
