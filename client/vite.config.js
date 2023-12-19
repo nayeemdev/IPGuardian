@@ -18,8 +18,11 @@ export default ({ mode }) => {
     resolve: {
       alias: {
         components: "/src/components",
-        pages: "/src/pages"
+        pages: "/src/pages",
+        utils: "/src/utils",
+        hooks: "/src/hooks",
+        services: "/src/services",
       },
     },
   });
-}
+};
