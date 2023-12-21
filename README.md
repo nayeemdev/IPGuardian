@@ -93,4 +93,5 @@ Note:*Api will open at `localhost:8000`, Client app will run at `localhost:3000`
 ![Create IP](./art/IPGuardian6.png)
 ![Audit Logs](./art/IPGuardian7.png)
 ![Edit IP](./art/IPGuardian8.png)
-![Test](./art/IPGuardianTest.png)
+![Test](./art/IPGUardianTest.png)
+
