@@ -29,7 +29,8 @@
             "Database\\Seeders\\": "database/seeders/"
         },
         "files": [
-            "app/Helpers/Common/GlobalHelper.php"
+            "app/Helpers/Common/GlobalHelper.php",
+            "app/Helpers/AuditLog/AuditLogHelper.php"
         ]
     },
     "autoload-dev": {

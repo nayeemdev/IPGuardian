@@ -52,7 +52,7 @@ class IpAddressController extends Controller
      * Display the specified resource.
      * @throws AuthorizationException
      */
-    public function show(IpAddress $ipAddress)
+    public function show(IpAddress $ipAddress): Response
     {
         $this->authorize('view', $ipAddress);
 
@@ -61,6 +61,14 @@ class IpAddressController extends Controller
         return $this->successWithData('IP address retrieved successfully', $ipAddress);
     }
 
+    public function logs(IpAddress $ipAddress, Request $request): Response
+    {
+        $this->authorize('view', $ipAddress);
+
+        $logs = $this->ipAddressService->logs($ipAddress->id, $request->query());
+
+        return $this->successWithData('IP address retrieved successfully', $logs);
+    }
 
     /**
      * Update the specified resource in storage.

@@ -2,8 +2,11 @@
 
 namespace App\Services\IpAddress;
 
+use App\Filters\AuditLog\AuditLogFilter;
 use App\Filters\IpAddress\IpAddressFilter;
+use App\Http\Resources\IpAddress\AuditLogCollection;
 use App\Http\Resources\IpAddress\IpAddressCollection;
+use App\Http\Resources\IpAddress\IpAddressLogResource;
 use App\Http\Resources\IpAddress\IpAddressResource;
 use App\Models\IpAddress;
 
@@ -24,7 +27,7 @@ class IpAddressService
 
     public function store(array $data): void
     {
-        $ipAddress = IpAddress::create([
+        IpAddress::create([
             'ip_address' => $data['ip_address'],
             'label' => $data['label'],
             'user_id' => auth()->id(),
@@ -35,6 +38,22 @@ class IpAddressService
     {
         $ipAddress = IpAddress::findOrFail($id);
         return new IpAddressResource($ipAddress);
+    }
+
+    public function logs(int $id, array $queryParams): AuditLogCollection
+    {
+        $ipAddress = IpAddress::findOrFail($id);
+
+        $builder = $ipAddress->auditLogs()->getQuery();
+
+
+        $auditLogs = resolve(AuditLogFilter::class)
+            ->getResults([
+                'builder' => $builder,
+                'params' => $queryParams,
+            ]);
+
+        return new AuditLogCollection($auditLogs);
     }
 
     public function update(array $data): void
