@@ -1,5 +1,6 @@
 <?php
 
+use App\Constants\AuditLog\LogEvents;
 use App\Models\User;
 
 test('Users can store a new ip', function () {
@@ -21,6 +22,13 @@ test('Users can store a new ip', function () {
         'ip_address' => '192.168.0.1',
         'label' => 'Local IP',
         'user_id' => $user->id,
+    ]);
+
+    $this->assertDatabaseHas('audit_logs', [
+        'event' => LogEvents::IP_CREATE,
+        'causer_type' => 'App\Models\User',
+        'causer_id' => $user->id,
+        'changes' => '{"ip_address":{"old":null,"new":{"ip_address":"192.168.0.1","label":"Local IP"}}}',
     ]);
 });
 
