@@ -1,5 +1,6 @@
 <?php
 
+use App\Constants\AuditLog\LogEvents;
 use App\Models\User;
 
 test('users can authenticate using the login screen', function () {
@@ -13,6 +14,14 @@ test('users can authenticate using the login screen', function () {
     $this->assertAuthenticated();
     $this->assertAuthenticatedAs($user);
     $response->assertNoContent();
+
+    // Check audit log
+    $this->assertDatabaseHas('audit_logs', [
+        'subject_id' => $user->id,
+        'event' => LogEvents::LOGIN,
+        'causer_type' => 'App\Models\User',
+        'causer_id' => $user->id,
+    ]);
 });
 
 test('users can see validation errors', function () {

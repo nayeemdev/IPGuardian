@@ -12,10 +12,11 @@ const DataTable = ({
   actionUrl,
   handleDelete,
   reload,
+  searchable = true,
 }) => {
   const [data, setData] = useState([]);
   const [perPage, setPerPage] = useState(10);
-  const [sortColumn, setSortColumn] = useState('created_at');
+  const [sortColumn, setSortColumn] = useState("created_at");
   const [sortOrder, setSortOrder] = useState("desc");
   const [search, setSearch] = useState("");
   const [pagination, setPagination] = useState({});
@@ -74,7 +75,7 @@ const DataTable = ({
         to: data.to,
         total: data.total,
       });
-      
+
       setLoading(false);
     };
 
@@ -86,12 +87,14 @@ const DataTable = ({
       <div className="flex items-center justify-between bg-white border-b mb-2 border-gray-200">
         {/* Search input starts */}
         <div>
+        {searchable && (
           <input
             className="rounded py-2 px-3 border border-gray-200 focus:outline-none focus:border-gray-500"
             placeholder="Search..."
             type="search"
             onChange={(e) => handleSearch(e.target.value)}
           />
+        )}
         </div>
         {/* Search input ends */}
 
@@ -149,8 +152,8 @@ const DataTable = ({
                 </td>
               </tr>
             )}
-            
-            {(!loading && data.length === 0) ? (
+
+            {!loading && data.length === 0 ? (
               <tr>
                 <td colSpan={columns.length} className="py-4">
                   <div className="flex justify-center">No items found</div>

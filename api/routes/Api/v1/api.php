@@ -26,4 +26,5 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
    Route::get('dashboard', DashboardController::class)->name('dashboard');
 
     Route::resource('ip-addresses', IpAddressController::class)->only(['index', 'store', 'show', 'update']);
+    Route::get('ip-addresses/{ipAddress}/logs', [IpAddressController::class, 'logs']);
 });

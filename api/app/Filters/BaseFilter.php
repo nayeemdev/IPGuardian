@@ -15,7 +15,7 @@ abstract class BaseFilter
             ->through($this->getFilters())
             ->then(fn($contents) => $contents['builder']);
 
-        // As we will using paginate in every query/filter
+        // As we are using paginate in every query/filter
         $perPage = $contents['params']['per_page'] ?? 10;
         $page = $contents['params']['page'] ?? 1;
 

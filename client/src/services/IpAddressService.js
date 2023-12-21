@@ -11,6 +11,13 @@ export const IpAddressService = {
     get: (id) => {
         return http.get(`ip-addresses/${id}`);
     },
+
+    getLogs: (id, queryString) => {
+        if (queryString) {
+            queryString = '?' + queryString;
+        }
+        return http.get(`ip-addresses/${id}/logs` + queryString);
+    },
     
     create: (data) => {
         return http.post('ip-addresses', data);

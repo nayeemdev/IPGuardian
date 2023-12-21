@@ -22,6 +22,7 @@ class DatabaseSeeder extends Seeder
 
         $this->call([
             IpAddressSeeder::class,
+            AuditLogSeeder::class,
         ]);
     }
 }

@@ -12,9 +12,9 @@ class Order implements ComponentInterface
         $orderBy = $content['params']['order_by'] ?? 'created_at';
         $orderBy = in_array($orderBy, $content['builder']->getModel()->getFillable()) ? $orderBy : 'created_at';
 
-        $orderDirection = in_array($content['params']['order_direction'], ['asc', 'desc'])
-        ? $content['params']['order_direction']
-        : 'asc';
+        $orderDirection = $content['params']['order_direction'] ?? 'asc';
+
+        $orderDirection = in_array($orderDirection, ['asc', 'desc']) ? $orderDirection : 'asc';
 
         $content['builder'] = $content['builder']->orderBy($orderBy, $orderDirection);
 

@@ -1,5 +1,6 @@
 <?php
 
+use App\Constants\AuditLog\LogEvents;
 use App\Models\IpAddress;
 use App\Models\User;
 
@@ -23,6 +24,11 @@ test('Users can update an ip', function () {
     $this->assertDatabaseHas('ip_addresses', [
         'id' => $ip->id,
         'label' => 'New Label',
+    ]);
+    $this->assertDatabaseHas('audit_logs', [
+        'event' => LogEvents::IP_UPDATE,
+        'causer_type' => 'App\Models\User',
+        'causer_id' => $user->id,
     ]);
 });
 

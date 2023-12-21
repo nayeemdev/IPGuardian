@@ -112,7 +112,7 @@ const IpAddressEdit = () => {
                 {validator.message("label", label, "required")}
               </div>
               <div className="flex items-center justify-end mt-4">
-                <Button type="submit" loading={buttonLoading} className="ml-3">Create</Button>
+                <Button type="submit" loading={buttonLoading} className="ml-3">Update</Button>
               </div>
             </form>
           </div>
