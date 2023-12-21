@@ -3,7 +3,7 @@
 use App\Models\User;
 
 test('new users can register', function () {
-    $response = $this->post(auth_url_prefix() . '/register', [
+    $response = $this->postJson(auth_url_prefix() . '/register', [
         'name' => 'Test User',
         'email' => 'test@example.com',
         'password' => 'password',
@@ -19,7 +19,7 @@ test('new users can register', function () {
 });
 
 test('new users can not register with invalid data', function () {
-    $response = $this->post(auth_url_prefix() . '/register', [
+    $response = $this->postJson(auth_url_prefix() . '/register', [
         'name' => 'Test User',
     ]);
 
@@ -27,7 +27,7 @@ test('new users can not register with invalid data', function () {
     $this->assertDatabaseMissing('users', [
         'name' => 'Test User',
     ]);
-    $response->assertStatus(302);
+    $response->assertStatus(422);
 });
 
 test('new users can not register with an existing email', function () {
@@ -35,7 +35,7 @@ test('new users can not register with an existing email', function () {
         ['email' => 'existing@example.com']
     );
 
-    $response = $this->post(auth_url_prefix() . '/register', [
+    $response = $this->postJson(auth_url_prefix() . '/register', [
         'name' => 'Test User',
         'email' => 'existing@example.com',
         'password' => 'password',
@@ -43,11 +43,11 @@ test('new users can not register with an existing email', function () {
     ]);
 
     $this->assertGuest();
-    $response->assertStatus(302);
+    $response->assertStatus(422);
 });
 
 test('new user can not register with invalid email', function () {
-    $response = $this->post(auth_url_prefix() . '/register', [
+    $response = $this->postJson(auth_url_prefix() . '/register', [
         'name' => 'Test User',
         'email' => 'invalid-email',
         'password' => 'password',
@@ -55,14 +55,19 @@ test('new user can not register with invalid email', function () {
     ]);
 
     $this->assertGuest();
-    $response->assertSessionHasErrors([
-        'email' => 'The email field must be a valid email address.',
+    $response->assertJson([
+        "message" => "The email field must be a valid email address.",
+        "errors" => [
+            "email" => [
+                "The email field must be a valid email address.",
+            ],
+        ],
     ]);
-    $response->assertStatus(302);
+    $response->assertStatus(422);
 });
 
 test('new user can not register with short password', function () {
-    $response = $this->post(auth_url_prefix() . '/register', [
+    $response = $this->postJson(auth_url_prefix() . '/register', [
         'name' => 'Test User',
         'email' => 'showr@password.com',
         'password' => 'short',
@@ -70,14 +75,19 @@ test('new user can not register with short password', function () {
     ]);
 
     $this->assertGuest();
-    $response->assertSessionHasErrors([
-        'password' => 'The password field must be at least 8 characters.',
+    $response->assertJson([
+        "message" => "The password field must be at least 8 characters.",
+        "errors" => [
+            "password" => [
+                "The password field must be at least 8 characters.",
+            ],
+        ],
     ]);
-    $response->assertStatus(302);
+    $response->assertStatus(422);
 });
 
 test('new user can not register without valid password confirmation password', function () {
-    $response = $this->post(auth_url_prefix() . '/register', [
+    $response = $this->postJson(auth_url_prefix() . '/register', [
         'name' => 'Test User',
         'email' => 'valid@email.com',
         'password' => 'password',
@@ -85,23 +95,33 @@ test('new user can not register without valid password confirmation password', f
     ]);
 
     $this->assertGuest();
-    $response->assertSessionHasErrors([
-        'password' => 'The password field confirmation does not match.',
+    $response->assertJson([
+        "message" => "The password field confirmation does not match.",
+        "errors" => [
+            "password" => [
+                "The password field confirmation does not match.",
+            ],
+        ],
     ]);
-    $response->assertStatus(302);
+    $response->assertStatus(422);
 });
 
-
-
 test('users can see validation errors for required field', function () {
-    $response = $this->post(auth_url_prefix() . '/register', [
+    $response = $this->postJson(auth_url_prefix() . '/register', [
         'name' => 'Test User',
     ]);
 
     $this->assertGuest();
-    $response->assertSessionHasErrors([
-        'email' => 'The email field is required.',
-        'password' => 'The password field is required.',
+    $response->assertJson([
+        "message" => "The email field is required. (and 1 more error)",
+        "errors" => [
+            "email" => [
+                "The email field is required.",
+            ],
+            "password" => [
+                "The password field is required.",
+            ],
+        ],
     ]);
-    $response->assertStatus(302);
+    $response->assertStatus(422);
 });

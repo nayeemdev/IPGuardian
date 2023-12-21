@@ -32,17 +32,17 @@ const Dashboard = () => {
             <div className="bg-white overflow-hidden shadow-xl sm:rounded-lg p-4">
               <h1 className="text-3xl">Welcome back!</h1>
               <p className="text-lg mb-2">
-                You have {dashboardData.data.ip_count} IP listed.
+                You have {dashboardData.data.data.ip_count} IP listed.
               </p>
               <NavLink
                 className="hover:text-gray-200 bg-black text-white px-4 me-2 py-2 rounded-md mt-4"
-                to="/ip"
+                to="/ip-addresses"
               >
                 See list
               </NavLink>
               <NavLink
                 className="hover:text-gray-200 bg-black text-white px-4 py-2 rounded-md mt-4"
-                to="/ip/create"
+                to="/ip-addresses/create"
               >
                 Create new
               </NavLink>

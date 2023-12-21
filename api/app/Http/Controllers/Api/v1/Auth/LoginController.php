@@ -19,7 +19,7 @@ class LoginController extends Controller
      *
      * @throws ValidationException
      */
-    public function login(LoginRequest $request): Response
+    public function login(LoginRequest $request)
     {
         $request->authenticate();
 
