@@ -36,9 +36,8 @@ docker-compose exec -it client sh
 6. Run the following commands inside the client container
 ```
 cp .env.example .env
-npm install
 ```
-7. Run tests inside the api container
+7. Run tests inside the API container
 ```
 docker exec -it api sh
 php artisan test
