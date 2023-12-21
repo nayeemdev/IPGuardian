@@ -39,7 +39,7 @@ cp .env.example .env
 ```
 7. Run tests inside the API container
 ```
-docker exec -it api sh
+docker-compose exec -it api sh
 php artisan test
 ```
 8. Demo user credentials
