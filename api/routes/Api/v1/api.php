@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\v1\IpAddress\IpAddressController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Laravel\Sanctum\Http\Controllers\CsrfCookieController;
@@ -21,9 +22,11 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
         return $request->user();
     });
 
-    Route::get('dashboard', function() {
-        return response()->json([
-            'ip_count' => 200,
-        ]);
-    });
+   Route::get('dashboard', function() {
+       return response()->json([
+           'ip_count' => 200,
+       ]);
+   })->name('dashboard');
+
+    Route::resource('ip-addresses', IpAddressController::class)->only(['index', 'store', 'show', 'update']);
 });
