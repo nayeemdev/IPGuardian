@@ -5,7 +5,7 @@ use App\Models\User;
 test('users can authenticate using the login screen', function () {
     $user = User::factory()->create();
 
-    $response = $this->post(auth_url_prefix() . '/login', [
+    $response = $this->postJson(auth_url_prefix() . '/login', [
         'email' => $user->email,
         'password' => 'password',
     ]);
@@ -16,21 +16,26 @@ test('users can authenticate using the login screen', function () {
 });
 
 test('users can see validation errors', function () {
-    $response = $this->post(auth_url_prefix() . '/login', [
+    $response = $this->postJson(auth_url_prefix() . '/login', [
         'email' => 'invalid-email',
         'password' => 'password',
     ]);
 
     $this->assertGuest();
-    $response->assertSessionHasErrors([
-        'email' => 'The email field must be a valid email address.',
+    $response->assertJson([
+        "message" => "The email field must be a valid email address.",
+        "errors" => [
+            "email" => [
+                "The email field must be a valid email address.",
+            ],
+        ],
     ]);
 });
 
 test('users can not authenticate with invalid email', function () {
     User::factory()->create();
 
-    $this->post(auth_url_prefix() . '/login', [
+    $this->postJson(auth_url_prefix() . '/login', [
         'email' => 'invalid-email',
         'password' => 'password',
     ]);
@@ -45,7 +50,7 @@ test('users can not authenticate with invalid email', function () {
 test('users can not authenticate with invalid password', function () {
     $user = User::factory()->create();
 
-    $this->post(auth_url_prefix() . '/login', [
+    $this->postJson(auth_url_prefix() . '/login', [
         'email' => $user->email,
         'password' => 'wrong-password',
     ]);
@@ -56,15 +61,15 @@ test('users can not authenticate with invalid password', function () {
 test('users can logout', function () {
     $user = User::factory()->create();
 
-    $response = $this->actingAs($user)->post(auth_url_prefix() . '/logout');
+    $response = $this->actingAs($user)->postJson(auth_url_prefix() . '/logout');
 
     $this->assertGuest();
     $response->assertNoContent();
 });
 
 test('guests can not logout', function () {
-    $response = $this->post(auth_url_prefix() . '/logout');
+    $response = $this->postJson(auth_url_prefix() . '/logout');
 
     $this->assertGuest();
-    $response->assertStatus(302);
+    $response->assertStatus(401);
 });
