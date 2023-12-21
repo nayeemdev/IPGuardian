@@ -74,6 +74,14 @@ class FormValidator {
         rule: (val) =>
           this.helpers.testRegex(val, /^\d{4}\s?\d{4,6}\s?\d{4,5}\s?\d{0,8}$/),
       },
+      ip: {
+        message: "The :attribute must be a valid IP address.",
+        rule: (val) =>
+          this.helpers.testRegex(
+            val,
+            /^([1-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[01]){1}(\.([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[01])){3}$/
+          ),
+      },
       currency: {
         message: "The :attribute must be a valid currency.",
         rule: (val) =>
