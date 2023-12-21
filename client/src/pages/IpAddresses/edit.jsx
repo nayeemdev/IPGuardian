@@ -87,14 +87,15 @@ const IpAddressEdit = () => {
             <form onSubmit={submitForm}>
               <div className="mt-2">
                 <Label htmlFor="ip">
-                  IP <span className="text-red-600">*</span>
+                  IP 
                 </Label>
                 <Input
                   id="ip"
                   type="text"
                   value={ip_address}
-                  className="block mt-1 w-full"
+                  className="block mt-1 w-full border-gray-100 text-gray-500"
                   onChange={(event) => setIpAddress(event.target.value)}
+                  readOnly={true}
                 />
                 {validator.message("ip_address", ip_address, "required|ip")}
               </div>
