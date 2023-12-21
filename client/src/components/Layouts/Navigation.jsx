@@ -22,6 +22,11 @@ const Navigation = ({user}) => {
                             >
                                 Dashboard
                             </CustomNavLink>
+                            <CustomNavLink
+                                to="/ip-addresses"
+                            >
+                                IP Addresses
+                            </CustomNavLink>
                         </div>
                     </div>
                     {/* Settings Dropdown */}
@@ -98,6 +103,12 @@ const Navigation = ({user}) => {
                             to="/dashboard"
                         >
                             Dashboard
+                        </ResponsiveNavLink>
+                        
+                        <ResponsiveNavLink
+                            to="/ip-addresses"
+                        >
+                            IP Adresses
                         </ResponsiveNavLink>
                     </div>
                     {/* Responsive Settings Options */}

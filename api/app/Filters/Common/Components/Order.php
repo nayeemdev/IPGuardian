@@ -9,14 +9,14 @@ class Order implements ComponentInterface
 {
     public function handle(array $content, Closure $next): mixed
     {
-        if (isset($content['params']['order_by'])) {
-            $orderBy = $content['params']['order_by'];
-            $orderDirection = in_array($content['params']['order_direction'], ['asc', 'desc'])
-                                ? $content['params']['order_direction']
-                                : 'asc';
+        $orderBy = $content['params']['order_by'] ?? 'created_at';
+        $orderBy = in_array($orderBy, $content['builder']->getModel()->getFillable()) ? $orderBy : 'created_at';
 
-            $content['builder'] = $content['builder']->orderBy($orderBy, $orderDirection);
-        }
+        $orderDirection = in_array($content['params']['order_direction'], ['asc', 'desc'])
+        ? $content['params']['order_direction']
+        : 'asc';
+
+        $content['builder'] = $content['builder']->orderBy($orderBy, $orderDirection);
 
         return $next($content);
     }

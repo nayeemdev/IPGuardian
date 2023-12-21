@@ -36,13 +36,13 @@ const Dashboard = () => {
               </p>
               <NavLink
                 className="hover:text-gray-200 bg-black text-white px-4 me-2 py-2 rounded-md mt-4"
-                to="/ip"
+                to="/ip-addresses"
               >
                 See list
               </NavLink>
               <NavLink
                 className="hover:text-gray-200 bg-black text-white px-4 py-2 rounded-md mt-4"
-                to="/ip/create"
+                to="/ip-addresses/create"
               >
                 Create new
               </NavLink>
